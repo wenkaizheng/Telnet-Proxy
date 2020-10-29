@@ -262,45 +262,21 @@ void init()
     // init as client for server
     sp_con();
     int rc ;
-    if (change_ip == 0)
-    {
-        while (1)
+    while (1){
+        rc = connect(server_socket, (struct sockaddr *)&server, sizeof(server));
+        if (rc != 0){
+           close(server_socket);
+           sp_con();
+           continue;
+        }
+        else
         {
-            rc = connect(server_socket, (struct sockaddr *)&server, sizeof(server));
-            if (rc != 0)
-            {
-                close(server_socket);
-                sp_con();
-                continue;
-            }
-            else
-            {
-                break;
-            }
+           break;
         }
     }
-    else
-    {
-        //if (change_ip != 2)
-        //{
-            while (1)
-            {
-                //printf("-----------------------------\n");
-                rc = connect(server_socket, (struct sockaddr *)&server, sizeof(server));
-                if (rc != 0)
-                {
-                    close(server_socket);
-                    sp_con();
-                    continue;
-                }
-                else
-                {
-                    break;
-                }
-            }
            
        // }
-    }
+    
     if (cp_exit == 1)
     {
         node *p = NULL;
